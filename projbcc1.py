@@ -49,44 +49,53 @@ while True:
                             i += 1
 
                     elif op_pac == 2:
-                        print("\n--- AGENDAR CONSULTA ---")
-                        i = 0
-                        while i < len(dentistas):
-                            print(f"- {dentistas[i][1]} ({dentistas[i][3]})")
-                            i += 1
+                        agendando = True
+                        while agendando:
+                            print("\n--- AGENDAR CONSULTA ---")
+                            i = 0
+                            while i < len(dentistas):
+                                print(f"- {dentistas[i][1]} ({dentistas[i][3]})")
+                                i += 1
 
-                        nome_dentista = input("Digite o nome do dentista desejado: ")
-                        dentista_existe = False
-                        i = 0
-                        while i < len(dentistas):
-                            if dentistas[i][1].lower() == nome_dentista.lower():
-                                dentista_existe = True
-                                nome_dentista = dentistas[i][1]
+                            nome_dentista = input("Digite o nome do dentista desejado (ou 0 para voltar): ")
+                            if nome_dentista == "0":
                                 break
-                            i += 1
 
-                        if not dentista_existe:
-                            print("Erro: Dentista não encontrado no catálogo! Não é possível prosseguir.")
-                        else:
-                            data = input("Digite a data desejada (DD/MM/AAAA): ")
-                            horario = input("Digite o horário desejado (HH:MM): ")
-                        data = input("Digite a data desejada (DD/MM/AAAA): ")
-                        horario = input("Digite o horário desejado (HH:MM): ")
+                            dentista_existe = False
+                            i = 0
+                            while i < len(dentistas):
+                                if dentistas[i][1].lower() == nome_dentista.lower():
+                                    dentista_existe = True
+                                    nome_dentista = dentistas[i][1]
+                                    break
+                                i += 1
 
-                        conflito = False
-                        i = 0
-                        while i < len(consultas):
-                            if consultas[i][1] == nome_dentista and consultas[i][2] == data and consultas[i][
-                                3] == horario:
-                                conflito = True
-                                break
-                            i += 1
+                            if not dentista_existe:
+                                print("Erro: Dentista não encontrado no catálogo!")
+                                tentar_novamente = int(input("Deseja escolher outro Dentista? (1 - Sim, 2 - Não): "))
+                                if tentar_novamente != 1:
+                                    agendando = False
+                            else:
+                                data = input("Digite a data desejada (DD/MM/AAAA): ")
+                                horario = input("Digite o horário desejado (HH:MM): ")
 
-                        if conflito:
-                            print("Erro: O dentista já possui consulta marcada neste horário!")
-                        else:
-                            consultas.append([pacientes[indice_paciente][1], nome_dentista, data, horario])
-                            print("Consulta agendada com sucesso!")
+                                conflito = False
+                                i = 0
+                                while i < len(consultas):
+                                    if consultas[i][1] == nome_dentista and consultas[i][2] == data and consultas[i][3] == horario:
+                                        conflito = True
+                                        break
+                                    i += 1
+
+                                if conflito:
+                                    print("Erro: O dentista já possui consulta marcada neste horário!")
+                                    tentar_novamente = int(input("Deseja tentar outro horário/dentista? (1 - Sim, 2 - Não): "))
+                                    if tentar_novamente != 1:
+                                        agendando = False
+                                else:
+                                    consultas.append([pacientes[indice_paciente][1], nome_dentista, data, horario])
+                                    print("Consulta agendada com sucesso!")
+                                    agendando = False
 
                     elif op_pac == 3:
                         print("\n--- MINHAS CONSULTAS FUTURAS ---")
