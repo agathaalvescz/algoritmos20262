@@ -56,6 +56,20 @@ while True:
                             i += 1
 
                         nome_dentista = input("Digite o nome do dentista desejado: ")
+                        dentista_existe = False
+                        i = 0
+                        while i < len(dentistas):
+                            if dentistas[i][1].lower() == nome_dentista.lower():
+                                dentista_existe = True
+                                nome_dentista = dentistas[i][1]
+                                break
+                            i += 1
+
+                        if not dentista_existe:
+                            print("Erro: Dentista não encontrado no catálogo! Não é possível prosseguir.")
+                        else:
+                            data = input("Digite a data desejada (DD/MM/AAAA): ")
+                            horario = input("Digite o horário desejado (HH:MM): ")
                         data = input("Digite a data desejada (DD/MM/AAAA): ")
                         horario = input("Digite o horário desejado (HH:MM): ")
 
